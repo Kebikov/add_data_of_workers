@@ -94,6 +94,32 @@ function workOnPage({resultArray, radioValue, companiesObj}) {
             inputAll[2].value = resultArray[2];
             inputAll[2].dispatchEvent(new Event('input', { bubbles: true }));
         }
+
+        const pro = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                console.log('Вызов 1');
+                resolve();
+            }, 50);
+        });
+        
+        pro
+            .then(() => {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        console.log('Вызов 2');
+                        resolve();
+                    }, 50);
+                });
+            })
+            .then(() => {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        console.log('Вызов 3');
+                        resolve();
+                    },50);
+                })
+            })
+            .catch((error) => console.error('Error :', error));
     
         // inputAll[10].value = 'Cпециалист склада';
         // inputAll[11].value = 'По присутствию на обЪекте'
