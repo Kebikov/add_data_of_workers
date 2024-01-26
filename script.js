@@ -72,57 +72,94 @@ document.addEventListener('DOMContentLoaded', async () => {
  */
 function workOnPage({resultArray, radioValue, companiesObj}) {
 
-    const inputAll = document.querySelectorAll('input');
-    console.log(resultArray);
-    console.log(companiesObj);
-    console.log('Пришло = ', companiesObj[radioValue]);
+    if(resultArray.length > 0) {
 
-    if(resultArray.length > 0 && inputAll.length > 0) {
-
-        if(inputAll[0]) {
-            inputAll[0].value = resultArray[0];
-            inputAll[0].dispatchEvent(new Event('input', { bubbles: true }));
+	 const inputSurname = document.querySelector('[placeholder="Фамилия"]');
+        if(inputSurname && resultArray[0]) {
+            inputSurname.value = resultArray[0];
+            inputSurname.dispatchEvent(new Event('input', { bubbles: true }));
         }
         
-
-        if(inputAll[1]) {
-            inputAll[1].value = resultArray[1];
-            inputAll[1].dispatchEvent(new Event('input', { bubbles: true }));
+	const inputName = document.querySelector('[placeholder="Имя"]');
+        if(inputName && resultArray[1]) {
+            inputName.value = resultArray[1];
+            inputName.dispatchEvent(new Event('input', { bubbles: true }));
         }
 
-        if(inputAll[2]) {
-            inputAll[2].value = resultArray[2];
-            inputAll[2].dispatchEvent(new Event('input', { bubbles: true }));
+	const inputSecondName = document.querySelector('[placeholder="Отчество"]');
+        if(inputSecondName && resultArray[2]) {
+            inputSecondName.value = resultArray[2];
+            inputSecondName.dispatchEvent(new Event('input', { bubbles: true }));
         }
 
-        const pro = new Promise((resolve, reject) => {
+	const inputPhone = document.querySelector('[placeholder="Номер телефона"]');
+        if(inputPhone && resultArray[3]) {
+            inputPhone.value = resultArray[3];
+            inputPhone.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+
+    const pro = new Promise((resolve, reject) => {
+        const inputModule = document.querySelectorAll('[placeholder="Подразделение"]');
+        if(inputModule.length > 0) {
             setTimeout(() => {
-                console.log('Вызов 1');
-                resolve();
-            }, 50);
-        });
-        
-        pro
-            .then(() => {
-                return new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                        console.log('Вызов 2');
-                        resolve();
-                    }, 50);
-                });
-            })
-            .then(() => {
-                return new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                        console.log('Вызов 3');
-                        resolve();
-                    },50);
-                })
-            })
-            .catch((error) => console.error('Error :', error));
-    
-        // inputAll[10].value = 'Cпециалист склада';
-        // inputAll[11].value = 'По присутствию на обЪекте'
+                if(inputModule.length === 2) {
+                    inputModule[1].click();
+                    resolve();
+                } else {
+                    inputModule[0].click();
+                    resolve();
+                }
+            },50);
+        }
+    });
+
+    pro
+        .then(() => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const spanModule = document.querySelector(`span[title="${companiesObj[radioValue]}"]`);
+                    spanModule.click();
+                    resolve();
+                }, 50);
+            });
+        })
+        .then(() => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const inputJobTitle = document.querySelector('[placeholder="Должность"]');
+                    inputJobTitle.click();
+                    resolve();
+                }, 50);
+            });
+        })
+        .then(() => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const spanJobTitle = document.querySelector(`span[title="Специалист склада"]`);
+                    spanJobTitle.click();
+                    resolve();
+                }, 50);
+            });
+        })
+        .then(() => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const inputCalendar = document.querySelector('[placeholder="График работы"]');
+                    inputCalendar.click();
+                    resolve();
+                }, 50);
+            });
+        })
+        .then(() => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const spanCalendar = document.querySelector(`span[title="По присутствию на объекте"]`);
+                    spanCalendar.click();
+                }, 50);
+            });
+        })
+        .catch(error => console.error(error));
+
     }
 
     return 'все ok';
